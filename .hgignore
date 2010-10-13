@@ -1,0 +1,6 @@
+syntax: glob
+*.class
+jsgll-gwt/.settings
+jsgll-gwt/war/WEB-INF/classes
+jsgll-gwt/war/WEB-INF/lib
+jsgll-gwt/war/jsgll_gwt
