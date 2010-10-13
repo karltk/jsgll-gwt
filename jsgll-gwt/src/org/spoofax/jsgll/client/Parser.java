@@ -193,6 +193,9 @@ public class Parser implements Context {
 
 	@Override
 	public void parseFinished() {
+		System.out.println("end of input reached");
+		for(Set x : U)
+			System.out.println(x);
 		if(U[maxInputPosition].contains(new Pair<Label, GSSNode>(L0, u0))) {
 			System.out.println("Successful parse");
 			tree = new ParseTree();
@@ -203,7 +206,10 @@ public class Parser implements Context {
 
 	@Override
 	public Action lookupActionByLabel(String targetLabel) {
-		return labels.get(targetLabel);
+		Action a =  labels.get(targetLabel);
+		if(a == null)
+			throw new IllegalStateException("Missing label " + targetLabel);
+		return a;
 	}
 
 	public void debugDump() {

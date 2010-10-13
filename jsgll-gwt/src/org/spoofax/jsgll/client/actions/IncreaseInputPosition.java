@@ -6,7 +6,7 @@ public class IncreaseInputPosition extends Action {
 
 	@Override
 	public Action exec(Context context) {
-		System.out.println("inc input pos");
+		System.out.println(context.getInputPosition() + " : inc input pos");
 		context.setInputPosition(context.getInputPosition() + 1);
 		return fallThrough;
 	}

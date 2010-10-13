@@ -47,7 +47,7 @@ public class SGLL {
 	
 	private Parser code(Grammar g) {
 		List<Action> actions = new ArrayList<Action>();
-		actions.add(new ProgramLabel(freshLabel()));
+		actions.add(new ProgramLabel(new Label("#L0")));
 		actions.add(new L0());
 		
 		for(NonTerminal nt : g.getProductions()) {
@@ -105,7 +105,7 @@ public class SGLL {
 		if(a.getSymbols().length == 0) {
 			// code(A ::= e, j)
 			actions.add(new Pop());
-			actions.add(new Goto("L0"));
+			actions.add(new Goto("#L0"));
 		} else if (a.getSymbols()[0] instanceof Terminal) {
 			// code(A ::= αk, j)
 			actions.add(new IncreaseInputPosition());
@@ -114,7 +114,7 @@ public class SGLL {
 				code(actions, sx[k], a);
 			}
 			actions.add(new Pop());
-			actions.add(new Goto("L0"));
+			actions.add(new Goto("#L0"));
 		} else {
 			// code(A ::= αk, j)
 			Symbol[] sx = a.getSymbols();
@@ -149,7 +149,7 @@ public class SGLL {
 	}
 
 	private static Label freshLabel() {
-		return new Label("R" + counter++);
+		return new Label("#R" + counter++);
 	}
 
 }

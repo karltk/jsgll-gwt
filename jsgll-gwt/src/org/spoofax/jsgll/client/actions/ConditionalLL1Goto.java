@@ -20,7 +20,7 @@ public class ConditionalLL1Goto extends Action {
 
 	@Override
 	public Action exec(Context context) {
-		System.out.println("cond ll(1) goto");
+		System.out.println(context.getInputPosition() + " : cond ll(1) goto");
 		if(Parser.test(context.getCurrentCharacter(), nonTerminal, alternative)) {
 			System.out.println(" -> " + next.getTarget());
 			return next;
@@ -31,6 +31,6 @@ public class ConditionalLL1Goto extends Action {
 
 	@Override
 	public String toString() {
-		return "  if(test(I[j], " + nonTerminal.getName() +  ", a?)) {" + next.toString() + "}";
+		return "  if(test(I[j], " + nonTerminal.getName() +  ", " + alternative.toString() + ")) {" + next.toString() + "}";
 	}
 }

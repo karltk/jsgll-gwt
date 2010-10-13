@@ -13,7 +13,7 @@ public class ProgramLabel extends Action {
 	
 	@Override
 	public Action exec(Context context) {
-		System.out.println("label " + label);
+		System.out.println(context.getInputPosition() + " : label " + label);
 		return fallThrough;
 	}
 	

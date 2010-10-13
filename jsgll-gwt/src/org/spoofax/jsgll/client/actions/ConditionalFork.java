@@ -18,13 +18,13 @@ public class ConditionalFork extends Action {
 	public ConditionalFork(Label nextAction, NonTerminal nonTerminal, Alternative alternative) {
 		this.nonTerminal = nonTerminal;
 		this.alternative = alternative;
-		l0 = new Goto("L0");
+		l0 = new Goto("#L0");
 		la = new Goto(alternative.getLabel());
 	}
 	
 	@Override
 	public Action exec(Context context) {
-		System.out.println("cond fork");
+		System.out.println(context.getInputPosition() + " : cond fork");
 		if(Parser.test(
 				context.getCurrentCharacter(), 
 				nonTerminal,

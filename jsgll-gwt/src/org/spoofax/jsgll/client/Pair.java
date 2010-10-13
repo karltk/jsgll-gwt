@@ -23,4 +23,9 @@ public class Pair<T1, T2> {
 		Pair<T1, T2> p = (Pair<T1, T2>) obj;
 		return p.fst.equals(fst) && p.snd.equals(snd); 
 	}
+	
+	@Override
+	public String toString() {
+		return "<" + fst.toString() + ", " + snd.toString() + ">";
+	}
 }

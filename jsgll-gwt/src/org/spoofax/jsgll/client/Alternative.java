@@ -33,4 +33,11 @@ public class Alternative {
 		throw new NotImplementedException();
 	}
 
+	@Override
+	public String toString() {
+		StringBuffer sb = new StringBuffer();
+		for(Symbol s : symbols)
+			sb.append(s.getName());
+		return sb.toString();
+	}
 }

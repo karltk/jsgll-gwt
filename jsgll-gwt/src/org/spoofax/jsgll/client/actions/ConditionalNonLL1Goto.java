@@ -23,7 +23,7 @@ public class ConditionalNonLL1Goto extends Action {
 
 	@Override
 	public Action exec(Context context) {
-		System.out.println("cond non-ll(1) goto");
+		System.out.println(context.getInputPosition() + " : cond non-ll(1) goto");
 		if(Parser.test(context.getCurrentCharacter(), nonTerminal, alternative)) {
 			context.add(next, context.getCurrentNode(), context.getInputPosition());
 		}

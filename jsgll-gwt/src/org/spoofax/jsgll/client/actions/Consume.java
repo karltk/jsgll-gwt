@@ -9,12 +9,12 @@ public class Consume extends Action {
 
 	public Consume(char ch) {
 		this.ch = ch;
-		l0 = new Goto("L0");
+		l0 = new Goto("#L0");
 	}
 
 	@Override
 	public Action exec(Context context) {
-		System.out.println("consume ");
+		System.out.println(context.getInputPosition() + " : consume ");
 		if(context.getCurrentCharacter() == ch) {
 			context.setInputPosition(context.getInputPosition() + 1);
 		} else {
@@ -25,7 +25,7 @@ public class Consume extends Action {
 	
 	@Override
 	public String toString() {
-		return "  if (I[j] == " + ch + ") { j += 1 } else { goto L0 }";
+		return "  if (I[j] == " + ch + ") { j += 1 } else { goto #L0 }";
 	}
 	
 

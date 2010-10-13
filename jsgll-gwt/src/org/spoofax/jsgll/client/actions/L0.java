@@ -9,7 +9,7 @@ public class L0 extends Action {
 
 	@Override
 	public Action exec(Context context) {
-		System.out.println("L0");
+		System.out.println(context.getInputPosition() + " : L0");
 		if(!context.R().isEmpty()) {
 			Triplet<Label, GSSNode, Integer> descriptor = context.R().remove();
 			context.setCurrentNode(descriptor.snd);

@@ -6,7 +6,7 @@ public class Pop extends Action {
 
 	@Override
 	public Action exec(Context context) {
-		System.out.println("pop");
+		System.out.println(context.getInputPosition() + " : pop");
 		context.pop(context.getCurrentNode(), context.getInputPosition());
 		return fallThrough;
 	}
