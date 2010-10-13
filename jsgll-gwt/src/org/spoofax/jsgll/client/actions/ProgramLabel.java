@@ -5,7 +5,6 @@ import org.spoofax.jsgll.client.Label;
 
 public class ProgramLabel extends Action {
 
-	private Action labeledAction;
 	private final String label;
 	
 	public ProgramLabel(Label label) {
@@ -13,12 +12,9 @@ public class ProgramLabel extends Action {
 	}
 	
 	@Override
-	public void exec(Context context) {
-		labeledAction.exec(context);
-	}
-
-	public void backpatchNextAction(Action nextAction) {
-		this.labeledAction = nextAction;
+	public Action exec(Context context) {
+		System.out.println("label " + label);
+		return fallThrough;
 	}
 	
 	public String getLabel() {

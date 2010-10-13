@@ -8,14 +8,17 @@ import org.spoofax.jsgll.client.Triplet;
 public class L0 extends Action {
 
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("L0");
 		if(!context.R().isEmpty()) {
 			Triplet<Label, GSSNode, Integer> descriptor = context.R().remove();
 			context.setCurrentNode(descriptor.snd);
 			context.setInputPosition(descriptor.trd);
-		} else {
-			context.parseFinished();
+			return fallThrough;
 		}
+		
+		context.parseFinished();
+		return null;
 	}
 
 	@Override

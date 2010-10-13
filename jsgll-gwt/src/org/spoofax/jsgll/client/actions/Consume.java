@@ -13,12 +13,14 @@ public class Consume extends Action {
 	}
 
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("consume ");
 		if(context.getCurrentCharacter() == ch) {
 			context.setInputPosition(context.getInputPosition() + 1);
 		} else {
-			l0.exec(context);
+			return l0;
 		}
+		return fallThrough;
 	}
 	
 	@Override

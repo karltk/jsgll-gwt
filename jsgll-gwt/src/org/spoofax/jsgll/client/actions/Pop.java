@@ -5,8 +5,10 @@ import org.spoofax.jsgll.client.Context;
 public class Pop extends Action {
 
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("pop");
 		context.pop(context.getCurrentNode(), context.getInputPosition());
+		return fallThrough;
 	}
 
 	@Override

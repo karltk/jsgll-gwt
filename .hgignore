@@ -1,4 +1,5 @@
 syntax: glob
+.metadata
 *.class
 jsgll-gwt/.settings
 jsgll-gwt/war/WEB-INF/classes

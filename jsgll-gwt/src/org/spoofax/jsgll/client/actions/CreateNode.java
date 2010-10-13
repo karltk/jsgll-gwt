@@ -12,8 +12,10 @@ public class CreateNode extends Action {
 	}
 
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("create node");
 		context.setCurrentNode(context.create(next, context.getCurrentNode(), context.getInputPosition()));
+		return fallThrough;
 	}
 
 	@Override

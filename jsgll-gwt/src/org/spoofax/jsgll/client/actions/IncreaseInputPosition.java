@@ -5,8 +5,10 @@ import org.spoofax.jsgll.client.Context;
 public class IncreaseInputPosition extends Action {
 
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("inc input pos");
 		context.setInputPosition(context.getInputPosition() + 1);
+		return fallThrough;
 	}
 
 	@Override

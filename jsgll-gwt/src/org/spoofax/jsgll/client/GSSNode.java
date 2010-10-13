@@ -1,21 +1,33 @@
 package org.spoofax.jsgll.client;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 public class GSSNode {
 
-	public GSSNode[] children() {
-		throw new NotImplementedException();
+	private final Set<GSSNode> children;
+	private final Label label;
+	
+	public GSSNode(Label label) {
+		this.label = label;
+		this.children = new HashSet<GSSNode>();
+	}
+	
+	public Collection<GSSNode> children() {
+		return children;
 	}
 
 	public Label getLabel() {
-		throw new NotImplementedException();
+		return label;
 	}
 
 	public boolean hasEdgeTo(GSSNode u) {
-		throw new NotImplementedException();
+		return children.contains(u);
 	}
 
 	public void addEdgeTo(GSSNode u) {
-		throw new NotImplementedException();
+		children.add(u);
 	}
 
 }

@@ -40,6 +40,7 @@ public class SGLL {
 	public ParseTree parse(Grammar g, String string) {
 		Parser p = code(g);
 		p.debugDump();
+		System.out.println();
 		return p.parse(string);
 	}
 
@@ -70,12 +71,9 @@ public class SGLL {
 		
 		actions.add(new ProgramLabel(nt.getLabel()));
 		
-		for(int i = 0; i < alternatives.length - 1; i++) {
-			actions.add(new ConditionalLL1Goto(nt, alternatives[i], labels[i], labels[i+1]));
+		for(int i = 0; i < alternatives.length; i++) {
+			actions.add(new ConditionalLL1Goto(nt, alternatives[i], labels[i]));
 		}
-		
-		actions.add(new ConditionalLL1Goto(nt, alternatives[labels.length - 1], labels[labels.length - 1], labels[0]));
-		
 		for(int i = 0; i < alternatives.length; i++) {
 			actions.add(new ProgramLabel(labels[i]));
 			code(actions, alternatives[i]);
@@ -151,7 +149,7 @@ public class SGLL {
 	}
 
 	private static Label freshLabel() {
-		return new Label("L" + counter++);
+		return new Label("R" + counter++);
 	}
 
 }

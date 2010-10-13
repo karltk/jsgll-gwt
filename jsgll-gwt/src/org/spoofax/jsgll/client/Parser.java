@@ -22,7 +22,8 @@ public class Parser implements Context {
 	private final Map<GSSNode, Collection<Integer>> P; // popped pairs
 	private Set<Pair<Label, GSSNode>>[] U; // updated pairs?
 	private final Queue<Triplet<Label, GSSNode, Integer>> R; // rest -- current descriptors
-
+	private final Map<Pair<Label, Integer>, GSSNode> gss;
+	
 	private GSSNode u0;
 	private GSSNode u1;
 	private GSSNode currentNode;
@@ -43,6 +44,7 @@ public class Parser implements Context {
 		
 		inputPosition = 1;
 
+		gss = new HashMap<Pair<Label,Integer>, GSSNode>();
 		P = new HashMap<GSSNode, Collection<Integer>>();
 		U = null;
 		R = new ArrayDeque<Triplet<Label,GSSNode,Integer>>();
@@ -52,16 +54,13 @@ public class Parser implements Context {
 	}
 
 	private void processLabels() {
-		ProgramLabel needsPatching = null;
-		for(Action a : actions) {
+		for(int i = 0; i < actions.size() - 1; i++) {
+			Action a = actions.get(i); 
 			if(a instanceof ProgramLabel) {
-				needsPatching = (ProgramLabel) a;
-			} else if(needsPatching != null) {
-				needsPatching.backpatchNextAction(a);
-				labels.put(needsPatching.getLabel(), needsPatching);
+				labels.put(((ProgramLabel) a).getLabel(), (ProgramLabel)a);
 			}
+			a.setFallThroughAction(actions.get(i+1));
 		}
-		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -69,8 +68,8 @@ public class Parser implements Context {
 		inputText = input;
 
 		U = new Set[inputText.length()+1];
-		u1 = new GSSNode();
-		u0 = new GSSNode();
+		u1 = new GSSNode(new Label("L0"));
+		u0 = new GSSNode(new Label("$"));
 		currentNode = u1;
 		inputPosition = 0;
 		maxInputPosition = inputText.length();
@@ -78,8 +77,11 @@ public class Parser implements Context {
 			U[j] = new HashSet<Pair<Label, GSSNode>>();
 		R.clear();
 		P.clear();
+		gss.clear();
 		if(first(new Alternative(grammar, new Symbol[] { grammar.startProduction(), grammar.EOF })).contains(inputText.charAt(inputPosition))) {
-			new Goto(grammar.startProduction().getLabel()).exec(this);
+			Action a = new Goto(grammar.startProduction().getLabel());
+			while(a != null)
+				a = a.exec(this);
 		} else {
 			throwParseFailure();
 		}
@@ -133,14 +135,22 @@ public class Parser implements Context {
 		GSSNode v = findOrCreate(label, inputPosition);
 		if(!v.hasEdgeTo(u)) {
 			v.addEdgeTo(u);
-			for(int k : P.get(v))
-				add(label, u, k);
+			Collection<Integer> vs = P.get(v);
+			if(vs != null)
+				for(int k : vs)
+					add(label, u, k);
 		}
 		return v;
 	}
 
 	private GSSNode findOrCreate(Label label, int inputPosition) {
-		throw new NotImplementedException();
+		Pair<Label, Integer> x = new Pair<Label, Integer>(label, inputPosition);
+		GSSNode r = gss.get(x);
+		if(r == null) {
+			r = new GSSNode(label);
+			gss.put(x, r);
+		}
+		return r;
 	}
 
 	static SymbolSet follow(NonTerminal nt) {

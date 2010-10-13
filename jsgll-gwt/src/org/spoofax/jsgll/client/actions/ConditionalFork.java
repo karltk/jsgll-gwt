@@ -23,15 +23,16 @@ public class ConditionalFork extends Action {
 	}
 	
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("cond fork");
 		if(Parser.test(
 				context.getCurrentCharacter(), 
 				nonTerminal,
 				alternative)) {
 			context.setCurrentNode(context.create(nextAction, context.getCurrentNode(), context.getInputPosition()));
-			la.exec(context);
+			return la;
 		} else {
-			l0.exec(context);
+			return l0;
 		}
 	}
 

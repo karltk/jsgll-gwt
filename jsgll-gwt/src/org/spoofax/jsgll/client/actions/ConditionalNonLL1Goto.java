@@ -22,11 +22,12 @@ public class ConditionalNonLL1Goto extends Action {
 	}
 
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("cond non-ll(1) goto");
 		if(Parser.test(context.getCurrentCharacter(), nonTerminal, alternative)) {
 			context.add(next, context.getCurrentNode(), context.getInputPosition());
 		}
-		fallThrough.exec(context);
+		return fallThrough;
 	}
 
 	@Override

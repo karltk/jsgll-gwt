@@ -18,15 +18,20 @@ public class Goto extends Action {
 	}
 
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("goto " + targetLabel);
 		if(cachedTarget == null)
 			cachedTarget = context.lookupActionByLabel(targetLabel);
-		cachedTarget.exec(context);
+		return cachedTarget;
 	}
 
 	@Override
 	public String toString() {
 		return "  goto " + targetLabel;
+	}
+
+	public String getTarget() {
+		return targetLabel;
 	}
 
 }

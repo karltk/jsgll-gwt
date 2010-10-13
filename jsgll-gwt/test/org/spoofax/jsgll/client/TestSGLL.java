@@ -26,6 +26,6 @@ public class TestSGLL extends GWTTestCase {
 		
 		SGLL pg = new SGLL();
 		
-		assertNotNull("Parse failed", pg.parse(g, "abd"));
+		assertNotNull("Parse failed", pg.parse(g, "aad"));
 	}
 }

@@ -8,25 +8,25 @@ import org.spoofax.jsgll.client.Parser;
 
 public class ConditionalLL1Goto extends Action {
 
-	private final Goto fallThrough;
 	private final Goto next;
 	private final NonTerminal nonTerminal;
 	private final Alternative alternative;
 
-	public ConditionalLL1Goto(NonTerminal nonTerminal, Alternative alternative, Label next, Label fallThrough) {
+	public ConditionalLL1Goto(NonTerminal nonTerminal, Alternative alternative, Label next) {
 		this.nonTerminal = nonTerminal;
 		this.alternative = alternative;
 		this.next = new Goto(next);
-		this.fallThrough = new Goto(fallThrough);
-		// 
 	}
 
 	@Override
-	public void exec(Context context) {
+	public Action exec(Context context) {
+		System.out.println("cond ll(1) goto");
 		if(Parser.test(context.getCurrentCharacter(), nonTerminal, alternative)) {
-			next.exec(context);
+			System.out.println(" -> " + next.getTarget());
+			return next;
 		}
-		fallThrough.exec(context);
+		System.out.println(" -> fallthrough");
+		return fallThrough;
 	}
 
 	@Override
